@@ -1,7 +1,7 @@
 // TODO: Include packages needed for this application
 const inquirer = require('inquirer');
 const fs = require('fs');
-const generateReadMe = require('./utils/generateMarkdown')
+const generateReadMe = require('./generateMarkdown')
 // TODO: Create an array of questions for user input
 inquirer
   .prompt([
@@ -26,9 +26,14 @@ inquirer
     name: 'usage',
   },
   {
-    type: 'input',
+    type: 'list',
     message: 'What licenses are associated with your project?',
     name: 'license',
+    choices: [
+      'MIT',
+      'Mozilla',
+      'WTFPL',
+    ]
   },
   {
     type: 'input',
@@ -47,12 +52,12 @@ inquirer
   },
   {
     type: 'input',
-    message: 'Link to your GitHub',
-    name: 'link',
+    message: 'What is your e-mail address?',
+    name: 'email',
   },
 ])
 .then((data) => {
-  fs.writeFile('ProjectREADME.md', generateReadMe(data), (error) => {
+  fs.writeFile('README.md', generateReadMe(data), (error) => {
     if (error) return console.log(error);
   })
 });
